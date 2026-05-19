@@ -77,17 +77,34 @@ fn find_frequent_edges(
 }
 
 fn main() {
+    // Заголовок программы
+    println!("Система поиска частых подграфов v0.1");
+    println!("Автор: Стренин Денис и Заиченко Андрей, группа ИСП-231");
+    println!();
+    
+    // Читаем аргументы командной строки
     let args = Args::parse();
+    
+    // Создаём тестовые графы для анализа
     let graphs = vec![create_graph_1(), create_graph_2()];
     
+    println!("  Запуск анализа... min_support = {}", args.min_support);
+    println!("  Обрабатывается графов: {}", graphs.len());
+    
+    // Запускаем алгоритм поиска
     let frequent = find_frequent_edges(&graphs, args.min_support);
     
-    println!("   Поиск частых рёбер (min_support = {}):", args.min_support);
+    // Вывод результатов
+    println!("\n Результаты поиска:");
     if frequent.is_empty() {
-        println!("   (ничего не найдено)");
+        println!("     Частые паттерны не найдены при заданном пороге");
     } else {
-        for ((from, to), count) in frequent {
-            println!("   {} → {} : {} раз", from, to, count);
+        println!("     Найдено паттернов: {}", frequent.len());
+        println!();
+        for ((from, to), count) in &frequent {
+            println!("    {} → {} | вхождений: {}", from, to, count);
         }
     }
+    
+    println!("\n✨ Работа завершена успешно");
 }
