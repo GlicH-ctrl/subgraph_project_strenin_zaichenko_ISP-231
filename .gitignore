@@ -1,0 +1,11 @@
+# Служебные файлы Cargo
+target/
+Cargo.lock
+
+# Файлы окружения
+.env
+*.log
+
+# ОС
+.DS_Store
+Thumbs.db
