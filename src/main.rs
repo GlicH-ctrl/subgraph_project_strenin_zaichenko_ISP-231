@@ -2,6 +2,16 @@
 use std::collections::HashMap;
 use petgraph::graph::Graph;
 use petgraph::Directed;
+use clap::Parser;
+
+/// Параметры запуска программы из терминала
+#[derive(Parser, Debug)]
+#[command(author = "Стренин Денис Заиченко Андрей, ИСП-231", version = "0.1.0", about = "Поиск частых подграфов")]
+struct Args {
+    /// Минимальное количество вхождений подграфа
+    #[arg(short, long, default_value_t = 2)]
+    min_support: usize,
+}
 
 /// Метка вершины (например, "Человек", "Фильм")
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -64,13 +74,17 @@ fn find_frequent_edges(graphs: &[LabeledGraph], min_support: usize) -> Vec<((Str
 }
 
 fn main() {
+    let args = Args::parse(); // Читаем аргументы
     let graphs = vec![create_graph_1(), create_graph_2()];
-    let min_support = 2;
     
-    let frequent = find_frequent_edges(&graphs, min_support);
+    let frequent = find_frequent_edges(&graphs, args.min_support);
     
-    println!("   Поиск частых рёбер (min_support = {}):", min_support);
-    for ((from, to), count) in frequent {
-        println!("   {} → {} : {} раз", from, to, count);
+    println!("🔍 Поиск частых рёбер (min_support = {}):", args.min_support);
+    if frequent.is_empty() {
+        println!("   (ничего не найдено)");
+    } else {
+        for ((from, to), count) in frequent {
+            println!("   {} → {} : {} раз", from, to, count);
+        }
     }
 }
