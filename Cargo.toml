@@ -1,6 +1,11 @@
 [package]
-name = "subgraph_project_strenin_zaichenko_ISP-231"
+name = "subgraph_mining"
 version = "0.1.0"
 edition = "2024"
+description = "Учебная система поиска частых подграфов"
 
 [dependencies]
+petgraph = "0.6"          # Работа с графами
+clap = { version = "4.4", features = ["derive"] }  # Аргументы командной строки
+serde = { version = "1.0", features = ["derive"] } # Сериализация данных
+serde_json = "1.0"        # Работа с JSON
